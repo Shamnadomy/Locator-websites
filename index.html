@@ -118,7 +118,7 @@ a{color:inherit;text-decoration:none}
 .btn-dark:hover{background:#000;transform:translateY(-1px)}
 
 /* ============ HERO ============ */
-.hero{text-align:center;padding:104px 0 0}
+.hero{text-align:center;padding:90px 0 10px;flex:none;position:relative}
 .eyebrow{font-size:21px;font-weight:800;letter-spacing:-.01em;color:var(--accent);margin-bottom:14px}
 .hero h1{
   font-size:clamp(42px,6.6vw,80px);font-weight:800;line-height:1.03;
@@ -148,6 +148,61 @@ a{color:inherit;text-decoration:none}
 }
 @keyframes loopFadeA{0%,40%{opacity:1}48%,92%{opacity:0}100%{opacity:1}}
 @keyframes loopFadeB{0%,40%{opacity:0}48%,92%{opacity:1}100%{opacity:0}}
+
+/* ===== FLEET SHOWCASE ANIMATION ===== */
+.fleet-scroll-wrapper{position:relative;height:220vh}
+.fleet-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.fs-animation-area{flex:1;position:relative;overflow:hidden}
+.fs-mobile,.fs-web{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;will-change:transform,opacity}
+.fs-web{opacity:0;transform:scale(0.75)}
+.fs-phone-arc{position:relative;display:flex;align-items:center;justify-content:center;width:100%;max-width:960px;height:600px;margin:0 auto}
+.fs-phone-arc::before{content:"";position:absolute;top:50%;left:50%;width:70%;height:60%;transform:translate(-50%,-50%);background:radial-gradient(50% 50%,rgba(10,132,255,0.08),transparent 70%);filter:blur(30px);z-index:0;pointer-events:none}
+.fs-phone{position:absolute;top:50%;left:50%;z-index:1;opacity:0;transform:translate(-50%,-50%) translateY(80px) scale(0.95);transition:transform 1s cubic-bezier(0.34,1.56,0.64,1),opacity 1s cubic-bezier(0.34,1.56,0.64,1)}
+.fs-phone[data-pos="2"]{z-index:5}
+.fs-phone[data-pos="1"],.fs-phone[data-pos="3"]{z-index:3}
+.fs-phone img{display:block;width:260px;height:auto;filter:drop-shadow(0 25px 50px rgba(0,0,0,0.18));pointer-events:none}
+.fs-notif-stack{position:absolute;bottom:18%;left:8%;right:8%;display:flex;flex-direction:column;gap:6px;z-index:10;pointer-events:none}
+.fs-notif-card{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.62),rgba(255,255,255,.4));backdrop-filter:blur(24px) saturate(185%);-webkit-backdrop-filter:blur(24px) saturate(185%);border:1px solid rgba(255,255,255,.65);color:var(--ink);font-size:11px;line-height:1.35;transform:translateY(20px) scale(0.92);opacity:0;transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1),opacity 0.35s ease;box-shadow:0 8px 24px -6px rgba(20,40,90,.18),inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 1px rgba(255,255,255,.35)}
+.fs-notif-card.visible{transform:translateY(0) scale(1);opacity:1}
+.fs-notif-card.out{opacity:0;transform:scale(0.95);transition:opacity 0.3s ease,transform 0.3s ease}
+.fs-notif-icon{width:24px;height:24px;border-radius:7px;background:rgba(10,132,255,0.12);display:grid;place-items:center;flex:none;margin-top:1px}
+.fs-notif-body{min-width:0}
+.fs-notif-body b{display:block;font-weight:700;font-size:10.5px;color:#1d1d1f}
+.fs-notif-body span{display:block;font-size:9.5px;color:#6e6e73;margin-top:1px}
+.fs-notif-body small{display:block;font-size:9px;color:#a1a1a6;margin-top:1px}
+.fs-browser-stack{position:relative;display:flex;align-items:center;justify-content:center;width:100%;max-width:1100px;height:640px;margin:0 auto}
+.fs-browser-stack::before{content:"";position:absolute;top:50%;left:50%;width:80%;height:70%;transform:translate(-50%,-50%);background:radial-gradient(50% 50%,rgba(10,132,255,0.06),transparent 70%);filter:blur(30px);z-index:0;pointer-events:none}
+.fs-browser{position:absolute;top:50%;left:50%;opacity:0;will-change:transform,opacity;transform:translate(-50%,-50%) translateY(40px)}
+.fs-browser img{display:block;height:auto;filter:drop-shadow(0 30px 60px rgba(0,0,0,0.22));border-radius:10px;pointer-events:none}
+.fs-browser[data-pos="0"]{z-index:1}
+.fs-browser[data-pos="0"] img{width:560px}
+.fs-browser[data-pos="1"]{z-index:3}
+.fs-browser[data-pos="1"] img{width:570px}
+.fs-browser[data-pos="2"]{z-index:1}
+.fs-browser[data-pos="2"] img{width:560px}
+.fs-web-notif-stack{position:absolute;top:80px;right:10px;display:flex;flex-direction:column;gap:5px;z-index:10;pointer-events:none;width:195px}
+@media(max-width:880px){
+  .fleet-scroll-wrapper{height:200vh}
+  .fs-phone img{width:200px}
+  .fs-phone[data-pos="0"]{--tx:-210px}
+  .fs-phone[data-pos="1"]{--tx:-110px}
+  .fs-phone[data-pos="3"]{--tx:110px}
+  .fs-phone[data-pos="4"]{--tx:210px}
+  .fs-browser[data-pos="1"] img{width:85vw;max-width:600px}
+  .fs-browser[data-pos="0"] img,.fs-browser[data-pos="2"] img{width:75vw;max-width:520px}
+  .fs-browser[data-pos="0"]{--bx:-60px;--by:15px}
+  .fs-browser[data-pos="2"]{--bx:60px;--by:15px}
+}
+@media(max-width:560px){
+  .fs-phone img{width:150px}
+  .fs-phone[data-pos="0"]{--tx:-145px;--sc:0.6}
+  .fs-phone[data-pos="1"]{--tx:-76px;--sc:0.78}
+  .fs-phone[data-pos="3"]{--tx:76px;--sc:0.78}
+  .fs-phone[data-pos="4"]{--tx:145px;--sc:0.6}
+  .fs-notif-stack{display:none}
+  .fs-browser[data-pos="0"],.fs-browser[data-pos="2"]{display:none}
+  .fs-browser[data-pos="1"] img{width:92vw}
+}
 
 /* ===== LIVE DASHBOARD SHOWCASE ===== */
 .dash-showcase{padding:36px 0 120px}
@@ -297,6 +352,36 @@ a{color:inherit;text-decoration:none}
 .cl-img .ph .big{font-size:64px;line-height:1}
 .cl-img .ph .nm{font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
 .cl-img .ph .note{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+
+/* Idle Alerts composition */
+.idle-wrap{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;width:100%;height:100%;position:relative;padding:0}
+.idle-phone{width:392px;flex-shrink:0;position:relative;z-index:1;filter:drop-shadow(0 12px 36px rgba(0,0,0,.12))}
+.idle-phone img{width:100%;height:auto;display:block;border-radius:28px}
+.idle-notif-stack{width:392px;display:flex;flex-direction:column;gap:7px;position:relative;z-index:2;margin-bottom:-22px}
+.idle-notif{background:#fff;border-radius:16px;padding:11px 14px;display:flex;align-items:flex-start;gap:11px;box-shadow:0 2px 14px rgba(0,0,0,.10),0 0 0 1px rgba(0,0,0,.04);opacity:0;transform:translateY(18px)}
+.cl-img.active .idle-notif{animation:idleNotifSlide 5s ease-in-out infinite}
+.cl-img.active .idle-notif:nth-child(1){animation-delay:0s}
+.cl-img.active .idle-notif:nth-child(2){animation-delay:.3s}
+.cl-img.active .idle-notif:nth-child(3){animation-delay:.6s}
+@keyframes idleNotifSlide{
+  0%{opacity:0;transform:translateY(18px) scale(.97)}
+  10%{opacity:1;transform:translateY(0) scale(1)}
+  72%{opacity:1;transform:translateY(0) scale(1)}
+  86%{opacity:0;transform:translateY(-8px) scale(.97)}
+  100%{opacity:0;transform:translateY(-8px) scale(.97)}
+}
+.cl-img[data-i="2"]{border-radius:24px;border:1px solid rgba(0,0,0,.08)}
+.idle-notif-icon{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#3b82f6,#2563eb);display:grid;place-items:center;flex-shrink:0}
+.idle-notif-icon img{width:20px;height:20px;object-fit:contain}
+.idle-notif-body{flex:1;min-width:0}
+.idle-notif-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:2px}
+.idle-notif-title{font-size:12.5px;font-weight:700;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.idle-notif-time{font-size:10.5px;color:#999;flex-shrink:0;font-weight:500}
+.idle-notif-sub{font-size:11px;color:#555;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-width:860px){
+  .idle-phone{width:280px}
+  .idle-notif-stack{width:280px}
+}
 @media(max-width:860px){
   .closer{grid-template-columns:1fr;gap:14px}
   .closer-nav{flex-direction:row;justify-content:center}
@@ -516,6 +601,20 @@ footer{border-top:1px solid var(--line);padding:60px 0 44px;color:var(--ink-soft
 @media(max-width:880px){
   .em-section .feat-grid{grid-template-columns:1fr}
 }
+
+/* ===== INSPECTION MODULE EMBED ===== */
+.im-section.wrap{max-width:1320px}
+.im-section .feat-grid{grid-template-columns:0.6fr 1.4fr;gap:40px}
+
+/* ===== FLEET MANAGER EMBED ===== */
+.fm-section.wrap{max-width:1320px}
+.fm-section .feat-grid{grid-template-columns:1.4fr 0.6fr;gap:40px}
+@media(max-width:880px){
+  .fm-section .feat-grid{grid-template-columns:1fr}
+}
+@media(max-width:880px){
+  .im-section .feat-grid{grid-template-columns:1fr}
+}
 .tm-photo-drop{border:1.5px dashed #cbd5e1;border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .15s ease;background:#fff}
 .tm-photo-drop:hover,.tm-photo-drop.dragover{border-color:#1360EF;background:#f5f7ff}
 @keyframes tmSlideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
@@ -545,26 +644,44 @@ footer{border-top:1px solid var(--line);padding:60px 0 44px;color:var(--ink-soft
   </div>
 </nav>
 
-<!-- ============ BLOCK 1 · HERO ============ -->
-<header class="hero wrap fade-block" id="top">
-  <p class="eyebrow" data-eyebrow style="margin: 0px 0px 24px">Locator Fleet Telematics</p>
-  <h1 data-headline style="width: 647px; font-size: 51px">One Platform for Complete Fleet Visibility</h1>
-  <p class="sub" style="font-size: 21px; color: rgb(3, 3, 3)">GPS tracking, telematics, tasks, expenses, inspections, maintenance and AI dashcams for your whole fleet, on web and mobile.</p>
-  <div class="cta-row">
-    <button class="btn btn-primary btn-lg">Get a quote</button>
-    <button class="btn btn-ghost btn-lg">Get a demo →</button>
+<!-- ============ BLOCK 1 · HERO + FLEET SHOWCASE ============ -->
+<div class="fleet-scroll-wrapper fade-block">
+  <div class="fleet-sticky">
+    <header class="hero wrap" id="top">
+      <p class="eyebrow" data-eyebrow style="margin: 0px 0px 24px">Locator Fleet Telematics</p>
+      <h1 data-headline style="width: 647px; font-size: 51px">One Platform for Complete Fleet Visibility</h1>
+      <p class="sub" style="font-size: 21px; color: rgb(3, 3, 3)">GPS tracking, telematics, tasks, expenses, inspections, maintenance and AI dashcams for your whole fleet, on web and mobile.</p>
+      <div class="cta-row">
+        <button class="btn btn-primary btn-lg">Get a quote</button>
+        <button class="btn btn-ghost btn-lg">Get a demo →</button>
+      </div>
+      <p style="margin-top:22px"><a href="#dashcam" style="color:var(--accent);font-weight:700;font-size:16px">Watch how it works ›</a></p>
+    </header>
+    <div class="fs-animation-area">
+      <div class="fs-mobile">
+      <div class="fs-phone-arc">
+        <div class="fs-phone" data-pos="0"><img src="images/mobile-graphical-report.png" alt="Graphical Report" /></div>
+        <div class="fs-phone" data-pos="1"><img src="images/mobile-notifications.png" alt="Notifications" /></div>
+        <div class="fs-phone" data-pos="2">
+          <img src="images/mobile-dashboard.png" alt="Dashboard" />
+          <div class="fs-notif-stack"></div>
+        </div>
+        <div class="fs-phone" data-pos="3"><img src="images/mobile-summary.png" alt="Summary" /></div>
+        <div class="fs-phone" data-pos="4"><img src="images/mobile-map-view.png" alt="Map View" /></div>
+      </div>
+    </div>
+    <div class="fs-web">
+      <div class="fs-browser-stack">
+        <div class="fs-browser" data-pos="0"><img src="images/web-graphical-report.png" alt="Graphical Report" /></div>
+        <div class="fs-browser" data-pos="1"><img src="images/web-live-map.png" alt="Live Map" /><div class="fs-web-notif-stack"></div></div>
+        <div class="fs-browser" data-pos="2"><img src="images/web-route-playback.png" alt="Route Playback" /></div>
+      </div>
+    </div>
+    </div>
   </div>
-  <p style="margin-top:22px"><a href="#dashcam" style="color:var(--accent);font-weight:700;font-size:16px">Watch how it works ›</a></p>
-
-  <!-- APP HERO + LIVE DASHBOARD · LOOPING SHOWCASE -->
-  <div class="hero-shot loop-shot">
-    <img class="loop-img loop-a" src="images/app-hero.png" alt="Locator app — graphical report, live dashboard and vehicle summary screens" />
-    <img class="loop-img loop-b" src="images/live-showcase.png" alt="Locator live tracking dashboard — fleet map with vehicle status across Abu Dhabi" style="object-fit: scale-down" />
-  </div>
-</header>
+</div>
 
 <!-- ============ BLOCK 2 · BENEFITS ============ -->
-<div class="divider"></div>
 <section class="benefits wrap reveal fade-block" id="benefits">
   <div class="sec-head">
     <span class="tag">Benefits</span>
@@ -590,7 +707,34 @@ footer{border-top:1px solid var(--line);padding:60px 0 44px;color:var(--ink-soft
     <div class="closer-stage">
       <div class="cl-img cl-media active" data-i="0"><video src="images/live-gps.mp4" muted loop playsinline preload="auto" autoplay></video></div>
       <div class="cl-img cl-media" data-i="1"><video src="images/fleet-dashboard.mp4" muted loop playsinline preload="auto"></video></div>
-      <div class="cl-img" data-i="2" style="background:#fff3e3"><div class="ph"><span class="big">⏱️</span><span class="nm">Instant Idle Alerts</span><span class="note">Image placeholder</span></div></div>
+      <div class="cl-img" data-i="2" style="background:#ffffff">
+        <div class="idle-wrap">
+          <div class="idle-notif-stack">
+            <div class="idle-notif">
+              <div class="idle-notif-icon"><img src="images/idle-icon.png" alt="idle"></div>
+              <div class="idle-notif-body">
+                <div class="idle-notif-top"><span class="idle-notif-title">Idle Alerts</span><span class="idle-notif-time">09:12</span></div>
+                <div class="idle-notif-sub">Ahmed K. · #38291 · Al Quoz Industrial</div>
+              </div>
+            </div>
+            <div class="idle-notif">
+              <div class="idle-notif-icon"><img src="images/idle-icon.png" alt="idle"></div>
+              <div class="idle-notif-body">
+                <div class="idle-notif-top"><span class="idle-notif-title">Idle Alerts</span><span class="idle-notif-time">09:28</span></div>
+                <div class="idle-notif-sub">Fatima R. · #49357 · Dubai Marina</div>
+              </div>
+            </div>
+            <div class="idle-notif">
+              <div class="idle-notif-icon"><img src="images/idle-icon.png" alt="idle"></div>
+              <div class="idle-notif-body">
+                <div class="idle-notif-top"><span class="idle-notif-title">Idle Alerts</span><span class="idle-notif-time">09:35</span></div>
+                <div class="idle-notif-sub">Omar S. · #52104 · Jebel Ali Free Zone</div>
+              </div>
+            </div>
+          </div>
+          <div class="idle-phone"><img src="images/idle-alerts-phone.png" alt="Idle alerts mobile view"></div>
+        </div>
+      </div>
       <div class="cl-img" data-i="3" style="background:#eceaf6"><div class="ph"><span class="big">🌙</span><span class="nm">After-Hours Vehicle Alerts</span><span class="note">Image placeholder</span></div></div>
       <div class="cl-img cl-media" data-i="4"><video src="images/daily-route.mp4" muted loop playsinline preload="auto"></video></div>
       <div class="cl-img" data-i="5" style="background:#eef0f4"><div class="ph"><span class="big">🔧</span><span class="nm">Fleet Service Reminders</span><span class="note">Image placeholder</span></div></div>
@@ -649,7 +793,7 @@ footer{border-top:1px solid var(--line);padding:60px 0 44px;color:var(--ink-soft
 
 <!-- BLOCK 5 · INSPECTION -->
 <div class="divider"></div>
-<section class="feat wrap reveal fade-block">
+<section class="feat wrap reveal fade-block im-section">
   <div class="feat-grid">
     <div class="ftext">
       <span class="tag">MODULE</span>
@@ -665,41 +809,29 @@ footer{border-top:1px solid var(--line);padding:60px 0 44px;color:var(--ink-soft
         <span>Boom loaders &amp; bulldozers</span>
       </div>
     </div>
-    <div class="viz">
-      <div class="viz-head"><div class="tl"><i></i><i></i><i></i></div><span class="tt">Inspection — Pre-trip checklist</span></div>
-      <div class="viz-body">
-        <div class="insp-item"><span class="insp-check" style="background:var(--green)">✓</span><span>Tyres &amp; pressure</span></div>
-        <div class="insp-item"><span class="insp-check" style="background:var(--green)">✓</span><span>Brakes &amp; lights</span></div>
-        <div class="insp-item"><span class="insp-check" style="background:var(--amber)">!</span><span>Coolant level — low</span></div>
-        <div class="insp-item"><span class="insp-check" style="background:var(--green)">✓</span><span>Safety equipment present</span></div>
-        <div class="insp-photos">
-          <div class="ph">PHOTO</div>
-          <div class="ph">PHOTO</div>
-          <div class="ph">PHOTO</div>
-        </div>
-      </div>
-    </div>
+    <div id="im-embed"></div>
   </div>
 </section>
 
-<!-- BLOCK 6 · FLEET SERVICE MANAGER -->
+<!-- BLOCK 6 · FLEET MANAGER -->
 <div class="divider"></div>
-<section class="feat wrap reveal fade-block">
+<section class="feat wrap reveal fade-block fm-section">
   <div class="feat-grid flip">
     <div class="ftext">
       <span class="tag">MODULE</span>
-      <h2>Fleet Service Manager</h2>
-      <p class="lead">Log completed services through the mobile app and view updates instantly on the admin dashboard. Automate reminders for oil change, tire change, maintenance schedules, and service follow-ups. This reduces breakdown risk, improves vehicle uptime, and streamlines daily fleet maintenance planning for UAE businesses.</p>
-    </div>
-    <div class="viz">
-      <div class="viz-head"><div class="tl"><i></i><i></i><i></i></div><span class="tt">Service Manager — Upcoming</span></div>
-      <div class="viz-body">
-        <div class="mrow"><div class="mi">🛢️</div><div class="mt"><b>Oil change</b><span>TRK-118 · due in 320 km</span></div><div class="mb b-amber">Due soon</div></div>
-        <div class="mrow"><div class="mi">🛞</div><div class="mt"><b>Tire rotation</b><span>VAN-204 · due in 12 days</span></div><div class="mb b-blue">Scheduled</div></div>
-        <div class="mrow"><div class="mi">🔧</div><div class="mt"><b>Full service</b><span>TRK-090 · completed 2 Mar</span></div><div class="mb b-green">Done</div></div>
-        <div class="mrow"><div class="mi">🪫</div><div class="mt"><b>Battery check</b><span>VAN-211 · overdue 4 days</span></div><div class="mb" style="background:rgba(255,90,95,.14);color:#d63a3f">Overdue</div></div>
+      <h2>Fleet Manager</h2>
+      <p class="lead">Manage your entire fleet operations with comprehensive tracking for vehicle documents, service schedules, fuel consumption, and other expenses. Ensure compliance, reduce downtime, and maintain accurate cost records for all fleet vehicles across UAE operations.</p>
+      <p class="suited-label">Useful for</p>
+      <div class="suited">
+        <span>Company vehicles</span>
+        <span>Construction machines</span>
+        <span>Rental fleets</span>
+        <span>School buses</span>
+        <span>Facility generators</span>
+        <span>Boom loaders &amp; bulldozers</span>
       </div>
     </div>
+    <div id="fm-embed"></div>
   </div>
 </section>
 
@@ -772,7 +904,7 @@ footer{border-top:1px solid var(--line);padding:60px 0 44px;color:var(--ink-soft
     <div class="faq-item"><button class="faq-q">Can I assign tasks to drivers or field staff?<span class="pm"></span></button><div class="faq-a"><p>Yes. The Task Manager module allows admins to assign tasks, track progress, collect field data, and monitor completion from the dashboard.</p></div></div>
     <div class="faq-item"><button class="faq-q">Can drivers upload fuel or parking bills?<span class="pm"></span></button><div class="faq-a"><p>Yes. The Expense Manager allows field teams to upload fuel, parking, toll, and ad-hoc expenses through the mobile app for admin approval.</p></div></div>
     <div class="faq-item"><button class="faq-q">Does the software support vehicle inspection?<span class="pm"></span></button><div class="faq-a"><p>Yes. The Inspection Module allows customizable checklists, photo uploads, vehicle condition reports, and handover tracking.</p></div></div>
-    <div class="faq-item"><button class="faq-q">Can I get service reminders?<span class="pm"></span></button><div class="faq-a"><p>Yes. The Fleet Service Manager helps automate reminders for oil change, tire change, and other scheduled maintenance activities.</p></div></div>
+    <div class="faq-item"><button class="faq-q">Can I get service reminders?<span class="pm"></span></button><div class="faq-a"><p>Yes. The Fleet Manager helps automate reminders for oil change, tire change, and other scheduled maintenance activities.</p></div></div>
     <div class="faq-item"><button class="faq-q">Does LOCATOR support AI dashcam?<span class="pm"></span></button><div class="faq-a"><p>Yes. LOCATOR supports AI-powered dashcam and video telematics features including driver behaviour monitoring, live HD video, incident evidence, and unsafe driving alerts.</p></div></div>
     <div class="faq-item"><button class="faq-q">What driver alerts can AI dashcam detect?<span class="pm"></span></button><div class="faq-a"><p>It can detect behaviours such as yawning, smoking, seatbelt violation, phone usage, distraction, droopy eyes, nodding off, and looking away.</p></div></div>
     <div class="faq-item"><button class="faq-q">Which industries can use this software?<span class="pm"></span></button><div class="faq-a"><p>The platform is suitable for logistics, transportation, FMCG, construction, rental fleets, school transport, healthcare fleets, facility management, waste management, field services, and recovery vehicles.</p></div></div>
@@ -798,7 +930,7 @@ footer{border-top:1px solid var(--line);padding:60px 0 44px;color:var(--ink-soft
       <a class="brand" href="#top" style="margin-bottom:14px"><img src="images/locator-logo.png" alt="Locator" style="height:30px" /></a>
       <p>AI-driven GPS tracking &amp; fleet telematics for businesses that can’t afford to guess.</p>
     </div>
-    <div class="foot-col"><h4>Modules</h4><a href="#modules">Task Manager</a><a href="#modules">Expense Manager</a><a href="#modules">Inspection</a><a href="#modules">Service Manager</a><a href="#dashcam">AI Dashcam</a></div>
+    <div class="foot-col"><h4>Modules</h4><a href="#modules">Task Manager</a><a href="#modules">Expense Manager</a><a href="#modules">Inspection</a><a href="#modules">Fleet Manager</a><a href="#dashcam">AI Dashcam</a></div>
     <div class="foot-col"><h4>Company</h4><a href="#">About</a><a href="#">Customers</a><a href="#">Careers</a><a href="#">Contact</a></div>
     <div class="foot-col"><h4>Resources</h4><a href="#blogs">Blogs</a><a href="#faq">FAQ</a><a href="#">Docs</a><a href="#">Support</a></div>
     <div class="foot-col"><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a></div>
@@ -820,6 +952,11 @@ footer{border-top:1px solid var(--line);padding:60px 0 44px;color:var(--ink-soft
 <script type="text/babel" src="em-data.jsx"></script>
 <script type="text/babel" src="em-web.jsx"></script>
 <script type="text/babel" src="em-mobile.jsx"></script>
+<script type="text/babel" src="im-data.jsx"></script>
+<script type="text/babel" src="im-web.jsx"></script>
+<script type="text/babel" src="im-mobile.jsx"></script>
+<script type="text/babel" src="fm-data.jsx"></script>
+<script type="text/babel" src="fm-web.jsx"></script>
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 
 
@@ -873,6 +1010,39 @@ function EMEmbed() {
 }
 const emRoot = document.getElementById('em-embed');
 if (emRoot) ReactDOM.createRoot(emRoot).render(<EMEmbed />);
+
+function IMEmbed() {
+  const [tab, setTab] = React.useState('web');
+  return (
+    <div style={{ paddingTop:10 }}>
+      <div className="tm-embed-tabs" style={{ marginBottom:10 }}>
+        <button className={"tm-embed-tab" + (tab==='web'?' active':'')} onClick={() => setTab('web')}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Web Dashboard
+        </button>
+        <button className={"tm-embed-tab" + (tab==='mobile'?' active':'')} onClick={() => setTab('mobile')}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+          Mobile App
+        </button>
+      </div>
+      <div style={{ animation:'tmFadeIn 0.3s ease' }} key={tab}>
+        {tab === 'web' ? <IMWebDashboard /> : <IMMobileApp />}
+      </div>
+    </div>
+  );
+}
+const imRoot = document.getElementById('im-embed');
+if (imRoot) ReactDOM.createRoot(imRoot).render(<IMEmbed />);
+
+function FMEmbed() {
+  return (
+    <div style={{ paddingTop:10 }}>
+      <FMWebDashboard />
+    </div>
+  );
+}
+const fmRoot = document.getElementById('fm-embed');
+if (fmRoot) ReactDOM.createRoot(fmRoot).render(<FMEmbed />);
 </script>
 
 <script>
@@ -967,9 +1137,10 @@ if (emRoot) ReactDOM.createRoot(emRoot).render(<EMEmbed />);
   open(0);
 })();
 </script>
-
+<script src="fleet-showcase.js"></script>
+<script type="text/babel">
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "accent": "#2d6bff",
+  "accent": "#0a84ff",
   "headline": "One Platform for Complete Fleet Visibility"
 }/*EDITMODE-END*/;
 
